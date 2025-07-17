@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState} from "react";
+import type { ChangeEvent } from "react";
+import type { Car } from "../App";
+interface CarModalProps {
+  targetCar: Car;
+  onClose: () => void;
+  onSave: (car: Car) => void;
+  onDelete: (car: Car) => void;
+}
 
-function CarModal({ targetCar, onClose, onSave, onDelete }) {
+function CarModal({ targetCar, onClose, onSave, onDelete }: CarModalProps) {
   const [car, setCar] = useState(targetCar);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     setCar({ ...car, [name]: value });
   };
 
