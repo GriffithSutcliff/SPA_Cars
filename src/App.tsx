@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import CarModal from './components/CarModal';
 
 export interface Car {
   id: number;
@@ -13,6 +14,8 @@ export interface Car {
 
 function App() {
   const [cars, setCars] = useState<Car[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [targetCar, setTargetCar] = useState<Car>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +36,7 @@ function App() {
 
 return (
     <div className="container">
+      {showModal ? <CarModal car={targetCar} onClose={() => setShowModal(false)} /> : <></>}
       <h1 className="title">Панель управления</h1>
       
       <div className="table-container">
@@ -46,6 +50,7 @@ return (
               <th scope="col">Цена</th>
               <th scope="col">Широта</th>
               <th scope="col">Долгота</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -66,6 +71,7 @@ return (
                 <td>${car.price.toLocaleString()}</td>
                 <td>{car.latitude.toFixed(4)}</td>
                 <td>{car.longitude.toFixed(4)}</td>
+                <td className='btn-change' onClick={() => {setShowModal(true), setTargetCar(car)}} >Изменить</td>
               </tr>
             ))}
           </tbody>
