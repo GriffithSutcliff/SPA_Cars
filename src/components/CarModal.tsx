@@ -1,10 +1,28 @@
+import { useState } from "react";
 
-function CarModal({ car, onClose }) {
+function CarModal({ targetCar, onClose, onSave, onDelete }) {
+  const [car, setCar] = useState(targetCar);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCar({ ...car, [name]: value });
+  };
+
+  const handleSave = () => {
+    onSave(car);
+    onClose();
+  };
+
   return (
     <div className="modalBackdrop">
       <div className="carModal">
         <div className="modalHeader">
-          <h3>Редактирование автомобиля</h3>
+          <button className="closeButton" onClick={handleSave}>
+            Сохранить
+          </button>
+          <button className="closeButton" onClick={() => {onDelete(car), onClose()}}>
+             Удалить
+          </button>
           <button className="closeButton" onClick={onClose}>
             Закрыть
           </button>
@@ -13,37 +31,65 @@ function CarModal({ car, onClose }) {
         <div className="modalBody">
           <div className="inputGroup">
             <label>Название:</label>
-            <input value={car.name} />
+            <input 
+              name="name" 
+              value={car.name} 
+              onChange={handleInputChange} 
+            />
           </div>
           
           <div className="inputGroup">
             <label>Модель:</label>
-            <input value={car.model} />
+            <input 
+              name="model" 
+              value={car.model} 
+              onChange={handleInputChange} 
+            />
           </div>
           
           <div className="inputGroup">
             <label>Год выпуска:</label>
-            <input value={car.year} />
+            <input 
+              name="year" 
+              value={car.year} 
+              onChange={handleInputChange} 
+            />
           </div>
           
           <div className="inputGroup">
             <label>Цвет:</label>
-            <input value={car.color} />
+            <input 
+              name="color" 
+              value={car.color} 
+              onChange={handleInputChange} 
+            />
           </div>
           
           <div className="inputGroup">
             <label>Цена ($):</label>
-            <input value={car.price} />
+            <input 
+              name="price" 
+              value={car.price} 
+              onChange={handleInputChange} 
+            />
           </div>
           
           <div className="inputGroup">
             <label>Широта:</label>
-            <input value={car.latitude} />
+            <input 
+              name="latitude" 
+              value={car.latitude} 
+              onChange={handleInputChange} 
+            />
           </div>
           
           <div className="inputGroup">
             <label>Долгота:</label>
-            <input value={car.longitude} />
+            <input 
+              name="longitude" 
+              value={car.longitude} 
+              onChange={handleInputChange} 
+            />
           </div>
         </div>
       </div>

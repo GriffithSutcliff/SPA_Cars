@@ -34,9 +34,17 @@ function App() {
   fetchData()
   }, []);
 
+  function updateCar (targetCar) {
+    setCars(cars.map(car => car.id === targetCar.id ? targetCar : car));
+  };
+    function deleteCar (targetCar) {
+    setCars(cars.filter((car) => car.id !== targetCar.id));
+  };
+
+
 return (
     <div className="container">
-      {showModal ? <CarModal car={targetCar} onClose={() => setShowModal(false)} /> : <></>}
+      {showModal ? <CarModal targetCar={targetCar} onClose={() => setShowModal(false)} onSave={updateCar} onDelete={deleteCar} /> : <></>}
       <h1 className="title">Панель управления</h1>
       
       <div className="table-container">
